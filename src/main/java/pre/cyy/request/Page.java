@@ -13,6 +13,7 @@ public class Page {
 
     private Request request;
 
+    private String url;
 
     private String rawText;
 
@@ -28,12 +29,24 @@ public class Page {
     public Page() {
     }
 
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
     public static Page fail() {
         Page page = new Page();
         page.setDownloadSuccess(false);
         return page;
     }
 
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public int getStatusCode() {
         return statusCode;

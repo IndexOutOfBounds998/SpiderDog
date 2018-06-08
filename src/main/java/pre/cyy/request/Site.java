@@ -1,6 +1,6 @@
-package request;
+package pre.cyy.request;
 
-import utils.HttpConstant;
+import pre.cyy.utils.HttpConstant;
 
 import java.util.*;
 
@@ -335,9 +335,7 @@ public class Site {
             return false;
         if (domain != null ? !domain.equals(site.domain) : site.domain != null) return false;
         if (headers != null ? !headers.equals(site.headers) : site.headers != null) return false;
-        if (userAgent != null ? !userAgent.equals(site.userAgent) : site.userAgent != null) return false;
-
-        return true;
+        return userAgent != null ? userAgent.equals(site.userAgent) : site.userAgent == null;
     }
 
     @Override

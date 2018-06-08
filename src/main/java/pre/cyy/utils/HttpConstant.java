@@ -1,4 +1,4 @@
-package utils;
+package pre.cyy.utils;
 
 /**
  * Some constants of Http protocal.

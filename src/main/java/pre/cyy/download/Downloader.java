@@ -14,6 +14,6 @@ public interface Downloader {
      * @param task    task
      * @return page
      */
-    public Page download(Request request, Task task);
+    Page download(Request request, Task task);
 
 }

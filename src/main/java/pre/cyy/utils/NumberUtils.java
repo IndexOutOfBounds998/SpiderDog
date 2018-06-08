@@ -1,4 +1,4 @@
-package utils;
+package pre.cyy.utils;
 
 /**
  * @author yihua.huang@dianping.com

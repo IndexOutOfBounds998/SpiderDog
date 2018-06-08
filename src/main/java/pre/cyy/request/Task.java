@@ -1,4 +1,4 @@
-package request;
+package pre.cyy.request;
 
 /**
  * Interface for identifying different tasks.<br>
@@ -10,13 +10,13 @@ public interface Task {
      *
      * @return uuid
      */
-    public String getUUID();
+    String getUUID();
 
     /**
      * site of a task
      *
      * @return site
      */
-    public Site getSite();
+    Site getSite();
 
 }

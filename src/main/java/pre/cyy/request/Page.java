@@ -1,9 +1,6 @@
-package request;
+package pre.cyy.request;
 
-import org.apache.commons.lang3.StringUtils;
-import us.codecraft.xsoup.xevaluator.ElementOperator;
-import utils.HttpConstant;
-import utils.UrlUtils;
+import pre.cyy.utils.HttpConstant;
 
 import java.util.ArrayList;
 import java.util.List;

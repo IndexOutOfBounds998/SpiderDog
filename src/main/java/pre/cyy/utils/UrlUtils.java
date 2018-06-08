@@ -1,7 +1,7 @@
-package utils;
+package pre.cyy.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import request.Request;
+import pre.cyy.request.Request;
 
 import java.net.MalformedURLException;
 import java.net.URL;

@@ -1,7 +1,6 @@
 
 import com.alibaba.fastjson.JSON;
 import pre.cyy.download.HttpClientDownloader;
-import pre.cyy.proxy.SimpleProxyProvider;
 import pre.cyy.request.HttpRequestBody;
 import pre.cyy.request.Page;
 import pre.cyy.request.Request;
@@ -15,11 +14,19 @@ import java.io.UnsupportedEncodingException;
  * @Date: 2018/6/7.18:02
  * @Desc: test
  */
-public class test {
+public class test extends HttpClientDownloader {
+    @Override
+    protected void onSuccess(Request request) {
+
+
+        System.out.println("测试onsuccess");
+
+
+    }
 
     public static void main(String[] args) {
 
-        HttpClientDownloader httpClientDownloader = HttpClientDownloader.getInstance();
+        test httpClientDownloader = new test();
         String url = "http://localhost/shanhumi/api/user/editUserInfo";
         buid buid = new buid();
         buid.setSessionid("10db0b69-7cca-4f0c-8efc-2a7f66bc32c3");

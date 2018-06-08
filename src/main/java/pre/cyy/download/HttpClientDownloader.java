@@ -29,23 +29,6 @@ import java.util.Map;
  * @since 0.1.0
  */
 public class HttpClientDownloader extends AbstractDownloader {
-    private static final Object lock = new Object();
-
-    private static HttpClientDownloader httpClientDownloader;
-
-    private HttpClientDownloader() {
-    }
-
-    public static HttpClientDownloader getInstance() {
-        if (httpClientDownloader == null) {
-            synchronized (lock) {
-                if (httpClientDownloader == null) {
-                    httpClientDownloader = new HttpClientDownloader();
-                }
-            }
-        }
-        return httpClientDownloader;
-    }
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

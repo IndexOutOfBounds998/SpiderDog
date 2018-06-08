@@ -18,6 +18,7 @@ public class Page {
     private String rawText;
 
 
+
     private Map<String, List<String>> headers;
 
     private int statusCode = HttpConstant.StatusCode.CODE_200;

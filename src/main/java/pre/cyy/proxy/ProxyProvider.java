@@ -1,8 +1,8 @@
-package proxy;
+package pre.cyy.proxy;
 
 
-import request.Page;
-import request.Task;
+import pre.cyy.request.Page;
+import pre.cyy.request.Task;
 
 /**
  * Proxy provider. <br>

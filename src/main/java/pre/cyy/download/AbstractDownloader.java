@@ -1,10 +1,10 @@
-package download;
+package pre.cyy.download;
 
 
-import request.Page;
-import request.Request;
-import request.Site;
-import request.Task;
+import pre.cyy.request.Page;
+import pre.cyy.request.Request;
+import pre.cyy.request.Site;
+import pre.cyy.request.Task;
 
 /**
  * Base class of downloader with some common methods.

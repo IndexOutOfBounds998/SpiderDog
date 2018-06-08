@@ -1,4 +1,4 @@
-package download;
+package pre.cyy.download;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -16,7 +16,7 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import request.Site;
+import pre.cyy.request.Site;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;

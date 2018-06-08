@@ -1,22 +1,20 @@
-package download;
+package pre.cyy.download;
 
-import com.google.common.base.Objects;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.annotation.ThreadSafe;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import proxy.Proxy;
-import proxy.ProxyProvider;
-import request.Page;
-import request.Request;
-import request.Site;
-import request.Task;
-import utils.CharsetUtils;
-import utils.HttpClientUtils;
+import pre.cyy.proxy.Proxy;
+import pre.cyy.proxy.ProxyProvider;
+import pre.cyy.request.Page;
+import pre.cyy.request.Request;
+import pre.cyy.request.Site;
+import pre.cyy.request.Task;
+import pre.cyy.utils.CharsetUtils;
+import pre.cyy.utils.HttpClientUtils;
 
 
 import java.io.IOException;

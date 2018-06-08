@@ -1,4 +1,4 @@
-package download;
+package pre.cyy.download;
 
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.protocol.HttpClientContext;

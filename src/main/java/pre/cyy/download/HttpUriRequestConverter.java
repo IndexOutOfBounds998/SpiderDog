@@ -1,4 +1,4 @@
-package download;
+package pre.cyy.download;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthState;
@@ -13,11 +13,11 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import proxy.Proxy;
-import request.Request;
-import request.Site;
-import utils.HttpConstant;
-import utils.UrlUtils;
+import pre.cyy.proxy.Proxy;
+import pre.cyy.request.Request;
+import pre.cyy.request.Site;
+import pre.cyy.utils.HttpConstant;
+import pre.cyy.utils.UrlUtils;
 
 import java.util.Map;
 

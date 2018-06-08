@@ -16,7 +16,6 @@ import pre.cyy.request.Task;
 import pre.cyy.utils.CharsetUtils;
 import pre.cyy.utils.HttpClientUtils;
 
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;

@@ -14,8 +14,7 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.HttpContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import pre.cyy.request.Site;
 
 import javax.net.ssl.SSLContext;
@@ -34,7 +33,7 @@ import java.util.Map;
  */
 public class HttpClientGenerator {
 
-    private transient Logger logger = LoggerFactory.getLogger(getClass());
+    private transient Logger logger = Logger.getLogger(getClass());
 
     private PoolingHttpClientConnectionManager connectionManager;
 

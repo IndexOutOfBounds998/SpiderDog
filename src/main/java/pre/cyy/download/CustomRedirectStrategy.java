@@ -9,8 +9,7 @@ import org.apache.http.client.methods.HttpRequestWrapper;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.protocol.HttpContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.net.URI;
 
@@ -21,7 +20,7 @@ import java.net.URI;
  * 原代码地址：https://github.com/zhegexiaohuozi/SeimiCrawler/blob/master/project/src/main/java/cn/wanghaomiao/seimi/http/hc/SeimiRedirectStrategy.java
  */
 public class CustomRedirectStrategy extends LaxRedirectStrategy {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = Logger.getLogger(getClass());
 
     @Override
     public HttpUriRequest getRedirect(HttpRequest request, HttpResponse response, HttpContext context) throws ProtocolException {

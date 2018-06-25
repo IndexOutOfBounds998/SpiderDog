@@ -1,12 +1,11 @@
 package pre.cyy.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -19,7 +18,7 @@ import java.nio.charset.Charset;
  */
 public abstract class CharsetUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(CharsetUtils.class);
+    private static Logger logger = Logger.getLogger(CharsetUtils.class);
 
     public static String detectCharset(String contentType, byte[] contentBytes) throws IOException {
         String charset;
@@ -27,7 +26,7 @@ public abstract class CharsetUtils {
         // 1、encoding in http header Content-Type
         charset = UrlUtils.getCharset(contentType);
         if (StringUtils.isNotBlank(contentType) && StringUtils.isNotBlank(charset)) {
-            logger.debug("Auto get charset: {}", charset);
+            logger.debug("Auto get charset: {}" + charset);
             return charset;
         }
         // use default charset to decode first time
@@ -53,9 +52,9 @@ public abstract class CharsetUtils {
                 }
             }
         }
-        logger.debug("Auto get charset: {}", charset);
+        logger.debug("Auto get charset: {}" + charset);
         // 3、todo use tools as cpdetector for content decode
         return charset;
     }
-    
+
 }

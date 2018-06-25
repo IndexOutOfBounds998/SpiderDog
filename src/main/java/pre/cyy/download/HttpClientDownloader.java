@@ -5,8 +5,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import pre.cyy.proxy.Proxy;
 import pre.cyy.proxy.ProxyProvider;
 import pre.cyy.request.Page;
@@ -30,7 +29,7 @@ import java.util.Map;
  */
 public class HttpClientDownloader extends AbstractDownloader {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = Logger.getLogger(getClass());
 
     private final Map<String, CloseableHttpClient> httpClients = new HashMap<String, CloseableHttpClient>();
 
@@ -73,7 +72,7 @@ public class HttpClientDownloader extends AbstractDownloader {
         if (task == null || task.getSite() == null) {
             throw new NullPointerException("task or site can not be null");
         }
-        logger.debug("downloading page {}", request.getUrl());
+        logger.info("downloading page " + request.getUrl());
         CloseableHttpResponse httpResponse = null;
         CloseableHttpClient httpClient = getHttpClient(task.getSite());
         Proxy proxy = proxyProvider != null ? proxyProvider.getProxy(task) : null;
@@ -83,10 +82,10 @@ public class HttpClientDownloader extends AbstractDownloader {
             httpResponse = httpClient.execute(requestContext.getHttpUriRequest(), requestContext.getHttpClientContext());
             page = handleResponse(request, task.getSite().getCharset(), httpResponse, task);
             onSuccess(request);
-            logger.debug("downloading page success {}", page);
+            logger.debug("downloading page success {}" + page);
             return page;
         } catch (IOException e) {
-            logger.warn("download page {} error", request.getUrl(), e);
+            logger.warn("download page {} error" + request.getUrl(), e);
             onError(request);
             return page;
         } finally {
@@ -121,7 +120,7 @@ public class HttpClientDownloader extends AbstractDownloader {
             if (htmlCharset != null) {
                 return new String(contentBytes, htmlCharset);
             } else {
-                logger.warn("Charset autodetect failed, use {} as charset. Please specify charset in Site.setCharset()", Charset.defaultCharset());
+                logger.warn("Charset autodetect failed, use {} as charset. Please specify charset in Site.setCharset()" + Charset.defaultCharset());
                 return new String(contentBytes);
             }
         } else {

@@ -1,61 +1,41 @@
-  <!--<dependency>-->
-        <!--<groupId>junit</groupId>-->
-        <!--<artifactId>junit</artifactId>-->
-        <!--<version>4.11</version>-->
-        <!--<scope>test</scope>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-        <!--<groupId>org.mockito</groupId>-->
-        <!--<artifactId>mockito-all</artifactId>-->
-        <!--<version>1.10.19</version>-->
-        <!--<scope>test</scope>-->
-    <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.jayway.jsonpath</groupId>-->
-        <!--<artifactId>json-path</artifactId>-->
-        <!--<version>0.8.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-api</artifactId>-->
-        <!--<version>1.7.6</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-log4j12</artifactId>-->
-        <!--<version>1.7.6</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>us.codecraft</groupId>-->
-        <!--<artifactId>xsoup</artifactId>-->
-        <!--<version>0.3.1</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.alibaba</groupId>-->
-        <!--<artifactId>fastjson</artifactId>-->
-        <!--<version>1.2.28</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>com.github.dreamhead</groupId>-->
-        <!--<artifactId>moco-core</artifactId>-->
-        <!--<version>0.11.0</version>-->
-        <!--<scope>test</scope>-->
-        <!--<exclusions>-->
-        <!--<exclusion>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-simple</artifactId>-->
-        <!--</exclusion>-->
-        <!--</exclusions>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.assertj</groupId>-->
-        <!--<artifactId>assertj-core</artifactId>-->
-        <!--<version>1.5.0</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.mockito</groupId>-->
-        <!--<artifactId>mockito-all</artifactId>-->
-        <!--<version>1.9.5</version>-->
-        <!--<scope>test</scope>-->
-        <!--</dependency>-->
+**请求网络**
+
+`java`
+  
+     
+      HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+             //设置代理
+             httpClientDownloader.setProxyProvider(new SimpleProxyProvider(null));
+                Request request = new Request();
+        request.setUrl("https://blog.csdn.net/xwnxwn/article/details/52510484");
+        //get 
+        request.setMethod(HttpConstant.Method.GET);
+        Site site = Site.me();
+        site.addHeader("Accept-Encoding", "gzip, deflate");
+        site.setCharset("utf-8");
+        site.setDomain("blog.csdn.net");
+        site.setTimeOut(5000);
+        site.addCookie("cookie", "11111111111");
+        Page page = httpClientDownloader.download(request, site.toTask());
+        System.out.println(page.getRawText());
+
+
+        //post 
+        Request requestPost = new Request();
+        request.setUrl("https://blog.csdn.net/xwnxwn/article/details/52510484");
+        requestPost.setMethod(HttpConstant.Method.POST);
+        try {
+            requestPost.setRequestBody(HttpRequestBody.json(null, "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //设置站点
+        Site sitepost = Site.me();
+        site.addHeader("Accept-Encoding", "gzip, deflate");
+        site.setCharset("utf-8");
+        site.setDomain("blog.csdn.net");
+        site.setTimeOut(5000);
+        site.addCookie("cookie", "11111111111");
+        Page pagePost = httpClientDownloader.download(request, sitepost.toTask());
+        System.out.println(pagePost.getRawText());
+        `java`

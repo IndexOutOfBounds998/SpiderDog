@@ -7,10 +7,9 @@ import pre.cyy.request.Site;
 import pre.cyy.request.Task;
 
 /**
- * Base class of downloader with some common methods.
- *
- * @author code4crafter@gmail.com
- * @since 0.5.0
+ * @author yang
+ * @date 2018/7/24 18:17
+ * @description AbstractDownloader downLoader 基类
  */
 public abstract class AbstractDownloader implements Downloader {
 
@@ -39,7 +38,7 @@ public abstract class AbstractDownloader implements Downloader {
 
     @Override
     public Page download(Request request, Task task) {
-        return null;
+        return download(request, task);
     }
 
     protected void onSuccess(Request request) {

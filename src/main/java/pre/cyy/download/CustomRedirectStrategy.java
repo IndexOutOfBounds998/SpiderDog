@@ -14,10 +14,9 @@ import org.apache.log4j.Logger;
 import java.net.URI;
 
 /**
- * 支持post 302跳转策略实现类
- * HttpClient默认跳转：httpClientBuilder.setRedirectStrategy(new LaxRedirectStrategy());
- * 上述代码在post/redirect/post这种情况下不会传递原有请求的数据信息。所以参考了下SeimiCrawler这个项目的重定向策略。
- * 原代码地址：https://github.com/zhegexiaohuozi/SeimiCrawler/blob/master/project/src/main/java/cn/wanghaomiao/seimi/http/hc/SeimiRedirectStrategy.java
+ * @author yang
+ * @date 2018/7/24 18:18
+ * @description 支持post 302跳转策略实现类
  */
 public class CustomRedirectStrategy extends LaxRedirectStrategy {
     private Logger logger = Logger.getLogger(getClass());

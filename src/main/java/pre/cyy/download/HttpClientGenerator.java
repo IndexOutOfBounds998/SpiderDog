@@ -28,8 +28,9 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 
 /**
- * @author code4crafter@gmail.com <br>
- * @since 0.4.0
+ * @author yang
+ * @date 2018/7/24 18:24
+ * @description HttpClientGenerator
  */
 public class HttpClientGenerator {
 
@@ -61,7 +62,6 @@ public class HttpClientGenerator {
     private SSLContext createIgnoreVerifySSL() throws NoSuchAlgorithmException, KeyManagementException {
         // 实现一个X509TrustManager接口，用于绕过验证，不用修改里面的方法
         X509TrustManager trustManager = new X509TrustManager() {
-
             @Override
             public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
             }
@@ -114,7 +114,6 @@ public class HttpClientGenerator {
         }
         //解决post/redirect/post 302跳转问题
         httpClientBuilder.setRedirectStrategy(new CustomRedirectStrategy());
-
         SocketConfig.Builder socketConfigBuilder = SocketConfig.custom();
         socketConfigBuilder.setSoKeepAlive(true).setTcpNoDelay(true);
         socketConfigBuilder.setSoTimeout(site.getTimeOut());

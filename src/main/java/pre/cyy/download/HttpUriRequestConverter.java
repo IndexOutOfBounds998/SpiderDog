@@ -22,10 +22,9 @@ import pre.cyy.utils.UrlUtils;
 import java.util.Map;
 
 /**
- * @author code4crafter@gmail.com
- *         Date: 17/3/18
- *         Time: 11:28
- * @since 0.7.0
+ * @author yang
+ * @date 2018/7/24 18:31
+ * @description HttpUriRequestConverter
  */
 public class HttpUriRequestConverter {
 

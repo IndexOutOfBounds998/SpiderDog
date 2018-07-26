@@ -1,15 +1,16 @@
 package pre.cyy.request;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import pre.cyy.utils.HttpConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author yang
  * @date 2018/7/26 15:14
- * @description PageResponse 请求后的构造
+ * @description PageResponse 返回结果
  */
 public class PageResponse {
 
@@ -26,7 +27,6 @@ public class PageResponse {
 
     private boolean downloadSuccess = true;
 
-    private List<Request> targetRequests = new ArrayList<Request>();
 
     public PageResponse() {
     }
@@ -48,6 +48,10 @@ public class PageResponse {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public JSONObject toJsonObject() {
+        return JSON.parseObject(getRawText());
     }
 
     public int getStatusCode() {

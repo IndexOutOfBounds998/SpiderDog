@@ -11,10 +11,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * @author code4crafter@gmail.com
- *         Date: 17/3/11
- *         Time: 10:36
- * @since 0.6.2
+ * @author yang
+ * @date 2018/7/26 15:16
+ * @description CharsetUtils
  */
 public abstract class CharsetUtils {
 

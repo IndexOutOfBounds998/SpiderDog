@@ -1,7 +1,10 @@
 package pre.cyy.request;
 
 /**
- * Interface for identifying different tasks.<br>
+ * @author yang
+ * @date 2018/7/26 15:16
+ * @description Interface for identifying different tasks
+ * task
  */
 public interface Task {
 

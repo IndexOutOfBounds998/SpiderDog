@@ -8,11 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author code4crafter@gmail.com
- *         Date: 17/3/27
+ * @author yang
+ * @date 2018/7/26 15:17
+ * @description HttpClientUtils
  */
 public abstract class HttpClientUtils {
-
+    /**
+     * @author yang
+     * @date 2018/7/26 15:17
+     * @description 转换 convertHeaders
+     */
     public static Map<String, List<String>> convertHeaders(Header[] headers) {
         Map<String, List<String>> results = new HashMap<String, List<String>>();
         for (Header header : headers) {

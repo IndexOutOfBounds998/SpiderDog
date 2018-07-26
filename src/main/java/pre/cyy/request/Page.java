@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @since 0.1.0
+ * @author yang
+ * @date 2018/7/26 15:14
+ * @description Page 请求后的构造
  */
 public class Page {
 
@@ -16,7 +18,6 @@ public class Page {
     private String url;
 
     private String rawText;
-
 
 
     private Map<String, List<String>> headers;

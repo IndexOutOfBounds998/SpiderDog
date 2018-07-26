@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * @author yang
  * @date 2018/7/24 18:22
- * @description Site 信息
+ * @description Site 站点信息
  */
 public class Site {
 

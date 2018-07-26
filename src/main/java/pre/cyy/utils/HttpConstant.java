@@ -1,9 +1,9 @@
 package pre.cyy.utils;
 
 /**
- * Some constants of Http protocal.
- * @author code4crafer@gmail.com
- * @since 0.5.0
+ * @author yang
+ * @date 2018/7/26 15:18
+ * @description HttpConstant http常量
  */
 public abstract class HttpConstant {
 

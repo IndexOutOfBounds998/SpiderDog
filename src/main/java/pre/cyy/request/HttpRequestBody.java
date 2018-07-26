@@ -10,8 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author code4crafter@gmail.com
- *         Date: 17/4/8
+ * @author yang
+ * @date 2018/7/26 15:12
+ * @description HttpRequestBody post请求体
  */
 public class HttpRequestBody {
 
@@ -29,7 +30,11 @@ public class HttpRequestBody {
     private final byte[] body;
 
     private final String contentType;
-
+    /**
+     * @author yang
+     * @date 2018/7/26 15:14
+     * @description 转换给byte的编码
+     */
     private final String encoding;
 
     public HttpRequestBody(byte[] body, String contentType, String encoding) {
@@ -58,7 +63,7 @@ public class HttpRequestBody {
         return new HttpRequestBody(body, contentType, encoding);
     }
 
-    public static HttpRequestBody form(Map<String,Object> params, String encoding) throws UnsupportedEncodingException {
+    public static HttpRequestBody form(Map<String, Object> params, String encoding) throws UnsupportedEncodingException {
         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(params.size());
         for (Map.Entry<String, Object> entry : params.entrySet()) {
             nameValuePairs.add(new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue())));

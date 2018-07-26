@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Object contains url to crawl.<br>
- * It contains some additional information.<br>
- *
- * @author code4crafter@gmail.com <br>
- * @since 0.1.0
+ * @author yang
+ * @date 2018/7/26 15:15
+ * @description Request 构造请求
  */
 public class Request implements Serializable {
 

@@ -25,7 +25,7 @@ public class test {
         request.setUrl("https://blog.csdn.net/xwnxwn/article/details/52510484");
         //get
         request.setMethod(HttpConstant.Method.GET);
-        SiteBuilder siteBuilder = SiteBuilder.me();
+        SiteBuilder siteBuilder = SiteBuilder.builder();
         siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
         siteBuilder.setCharset("utf-8");
         siteBuilder.setDomain("blog.csdn.net");
@@ -45,7 +45,7 @@ public class test {
             e.printStackTrace();
         }
         //设置站点
-        SiteBuilder sitepost = SiteBuilder.me();
+        SiteBuilder sitepost = SiteBuilder.builder();
         siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
         siteBuilder.setCharset("utf-8");
         siteBuilder.setDomain("blog.csdn.net");

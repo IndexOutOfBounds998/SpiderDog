@@ -1,8 +1,8 @@
 package pre.cyy.proxy;
 
 
-import pre.cyy.request.Page;
-import pre.cyy.request.Task;
+import pre.cyy.request.Job;
+import pre.cyy.request.PageResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,12 +41,12 @@ public class SimpleProxyProvider implements ProxyProvider {
     }
 
     @Override
-    public void returnProxy(Proxy proxy, Page page, Task task) {
+    public void returnProxy(Proxy proxy, PageResponse pageResponse, Job job) {
         //Donothing
     }
 
     @Override
-    public Proxy getProxy(Task task) {
+    public Proxy getProxy(Job job) {
         return proxies.get(incrForLoop());
     }
 

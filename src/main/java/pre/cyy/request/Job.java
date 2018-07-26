@@ -6,7 +6,7 @@ package pre.cyy.request;
  * @description Interface for identifying different tasks
  * task
  */
-public interface Task {
+public interface Job {
 
     /**
      * unique id for a task.
@@ -20,6 +20,6 @@ public interface Task {
      *
      * @return site
      */
-    Site getSite();
+    SiteBuilder getSite();
 
 }

@@ -1,14 +1,12 @@
 import pre.cyy.download.HttpClientDownloader;
 import pre.cyy.proxy.SimpleProxyProvider;
 import pre.cyy.request.HttpRequestBody;
-import pre.cyy.request.Page;
+import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.Site;
+import pre.cyy.request.SiteBuilder;
 import pre.cyy.utils.HttpConstant;
 
 import java.io.UnsupportedEncodingException;
-
-import static pre.cyy.request.HttpRequestBody.ContentType.JSON;
 
 /**
  * @Author: yang
@@ -27,14 +25,14 @@ public class test {
         request.setUrl("https://blog.csdn.net/xwnxwn/article/details/52510484");
         //get
         request.setMethod(HttpConstant.Method.GET);
-        Site site = Site.me();
-        site.addHeader("Accept-Encoding", "gzip, deflate");
-        site.setCharset("utf-8");
-        site.setDomain("blog.csdn.net");
-        site.setTimeOut(5000);
-        site.addCookie("cookie", "11111111111");
-        Page page = httpClientDownloader.download(request, site.toTask());
-        System.out.println(page.getRawText());
+        SiteBuilder siteBuilder = SiteBuilder.me();
+        siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
+        siteBuilder.setCharset("utf-8");
+        siteBuilder.setDomain("blog.csdn.net");
+        siteBuilder.setTimeOut(5000);
+        siteBuilder.addCookie("cookie", "11111111111");
+        PageResponse pageResponse = httpClientDownloader.download(request, siteBuilder.toTask());
+        System.out.println(pageResponse.getRawText());
 
 
         //post
@@ -47,13 +45,13 @@ public class test {
             e.printStackTrace();
         }
         //设置站点
-        Site sitepost = Site.me();
-        site.addHeader("Accept-Encoding", "gzip, deflate");
-        site.setCharset("utf-8");
-        site.setDomain("blog.csdn.net");
-        site.setTimeOut(5000);
-        site.addCookie("cookie", "11111111111");
-        Page pagePost = httpClientDownloader.download(request, sitepost.toTask());
-        System.out.println(pagePost.getRawText());
+        SiteBuilder sitepost = SiteBuilder.me();
+        siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
+        siteBuilder.setCharset("utf-8");
+        siteBuilder.setDomain("blog.csdn.net");
+        siteBuilder.setTimeOut(5000);
+        siteBuilder.addCookie("cookie", "11111111111");
+        PageResponse pageResponsePost = httpClientDownloader.download(request, sitepost.toTask());
+        System.out.println(pageResponsePost.getRawText());
     }
 }

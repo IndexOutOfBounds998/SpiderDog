@@ -10,14 +10,14 @@
         request.setUrl("https://blog.csdn.net/xwnxwn/article/details/52510484");
         //get 
         request.setMethod(HttpConstant.Method.GET);
-        Site site = Site.me();
-        site.addHeader("Accept-Encoding", "gzip, deflate");
-        site.setCharset("utf-8");
-        site.setDomain("blog.csdn.net");
-        site.setTimeOut(5000);
-        site.addCookie("cookie", "11111111111");
-        Page page = httpClientDownloader.download(request, site.toTask());
-        System.out.println(page.getRawText());
+        Site siteBuilder = Site.me();
+        siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
+        siteBuilder.setCharset("utf-8");
+        siteBuilder.setDomain("blog.csdn.net");
+        siteBuilder.setTimeOut(5000);
+        siteBuilder.addCookie("cookie", "11111111111");
+        Page pageResponse = httpClientDownloader.download(request, siteBuilder.toTask());
+        System.out.println(pageResponse.getRawText());
 
 
         //post 
@@ -31,11 +31,11 @@
         }
         //设置站点
         Site sitepost = Site.me();
-        site.addHeader("Accept-Encoding", "gzip, deflate");
-        site.setCharset("utf-8");
-        site.setDomain("blog.csdn.net");
-        site.setTimeOut(5000);
-        site.addCookie("cookie", "11111111111");
-        Page pagePost = httpClientDownloader.download(request, sitepost.toTask());
-        System.out.println(pagePost.getRawText());
+        siteBuilder.addHeader("Accept-Encoding", "gzip, deflate");
+        siteBuilder.setCharset("utf-8");
+        siteBuilder.setDomain("blog.csdn.net");
+        siteBuilder.setTimeOut(5000);
+        siteBuilder.addCookie("cookie", "11111111111");
+        Page pageResponsePost = httpClientDownloader.download(request, sitepost.toTask());
+        System.out.println(pageResponsePost.getRawText());
         `java`

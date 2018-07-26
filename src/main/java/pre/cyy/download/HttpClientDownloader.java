@@ -7,10 +7,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import pre.cyy.proxy.Proxy;
 import pre.cyy.proxy.ProxyProvider;
-import pre.cyy.request.Page;
+import pre.cyy.request.Job;
+import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.Site;
-import pre.cyy.request.Task;
+import pre.cyy.request.SiteBuilder;
 import pre.cyy.utils.CharsetUtils;
 import pre.cyy.utils.HttpClientUtils;
 
@@ -49,17 +49,17 @@ public class HttpClientDownloader extends AbstractDownloader {
         this.proxyProvider = proxyProvider;
     }
 
-    private CloseableHttpClient getHttpClient(Site site) {
-        if (site == null) {
+    private CloseableHttpClient getHttpClient(SiteBuilder siteBuilder) {
+        if (siteBuilder == null) {
             return httpClientGenerator.getClient(null);
         }
-        String domain = site.getDomain();
+        String domain = siteBuilder.getDomain();
         CloseableHttpClient httpClient = httpClients.get(domain);
         if (httpClient == null) {
             synchronized (this) {
                 httpClient = httpClients.get(domain);
                 if (httpClient == null) {
-                    httpClient = httpClientGenerator.getClient(site);
+                    httpClient = httpClientGenerator.getClient(siteBuilder);
                     httpClients.put(domain, httpClient);
                 }
             }
@@ -68,45 +68,45 @@ public class HttpClientDownloader extends AbstractDownloader {
     }
 
     @Override
-    public Page download(Request request, Task task) {
-        if (task == null || task.getSite() == null) {
-            throw new NullPointerException("task or site can not be null");
+    public PageResponse download(Request request, Job job) {
+        if (job == null || job.getSite() == null) {
+            throw new NullPointerException("job or site can not be null");
         }
         CloseableHttpResponse httpResponse = null;
-        CloseableHttpClient httpClient = getHttpClient(task.getSite());
-        Proxy proxy = proxyProvider != null ? proxyProvider.getProxy(task) : null;
-        HttpClientRequestContext requestContext = httpUriRequestConverter.convert(request, task.getSite(), proxy);
-        Page page = Page.fail();
+        CloseableHttpClient httpClient = getHttpClient(job.getSite());
+        Proxy proxy = proxyProvider != null ? proxyProvider.getProxy(job) : null;
+        HttpClientRequestContext requestContext = httpUriRequestConverter.convert(request, job.getSite(), proxy);
+        PageResponse pageResponse = PageResponse.fail();
         try {
             httpResponse = httpClient.execute(requestContext.getHttpUriRequest(), requestContext.getHttpClientContext());
-            page = handleResponse(request, task.getSite().getCharset(), httpResponse, task);
+            pageResponse = handleResponse(request, job.getSite().getCharset(), httpResponse, job);
             onSuccess(request);
-            return page;
+            return pageResponse;
         } catch (IOException e) {
             onError(request);
-            return page;
+            return pageResponse;
         } finally {
             if (httpResponse != null) {
                 EntityUtils.consumeQuietly(httpResponse.getEntity());
             }
             if (proxyProvider != null && proxy != null) {
-                proxyProvider.returnProxy(proxy, page, task);
+                proxyProvider.returnProxy(proxy, pageResponse, job);
             }
         }
     }
 
-    protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
+    protected PageResponse handleResponse(Request request, String charset, HttpResponse httpResponse, Job job) throws IOException {
         String content = getResponseContent(charset, httpResponse);
-        Page page = new Page();
-        page.setRawText(content);
-        page.setUrl((request.getUrl()));
-        page.setRequest(request);
-        page.setStatusCode(httpResponse.getStatusLine().getStatusCode());
-        page.setDownloadSuccess(true);
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setRawText(content);
+        pageResponse.setUrl((request.getUrl()));
+        pageResponse.setRequest(request);
+        pageResponse.setStatusCode(httpResponse.getStatusLine().getStatusCode());
+        pageResponse.setDownloadSuccess(true);
         if (responseHeader) {
-            page.setHeaders(HttpClientUtils.convertHeaders(httpResponse.getAllHeaders()));
+            pageResponse.setHeaders(HttpClientUtils.convertHeaders(httpResponse.getAllHeaders()));
         }
-        return page;
+        return pageResponse;
     }
 
     private String getResponseContent(String charset, HttpResponse httpResponse) throws IOException {

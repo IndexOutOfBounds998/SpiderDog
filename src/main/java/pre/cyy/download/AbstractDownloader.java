@@ -1,10 +1,10 @@
 package pre.cyy.download;
 
 
-import pre.cyy.request.Page;
+import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.Site;
-import pre.cyy.request.Task;
+import pre.cyy.request.SiteBuilder;
+import pre.cyy.request.Job;
 
 /**
  * @author yang
@@ -31,14 +31,14 @@ public abstract class AbstractDownloader implements Downloader {
      * @param charset charset
      * @return html
      */
-    public Page download(String url, String charset) {
-        Page page = download(new Request(url), Site.me().setCharset(charset).toTask());
-        return page;
+    public PageResponse download(String url, String charset) {
+        PageResponse pageResponse = download(new Request(url), SiteBuilder.me().setCharset(charset).toTask());
+        return pageResponse;
     }
 
     @Override
-    public Page download(Request request, Task task) {
-        return download(request, task);
+    public PageResponse download(Request request, Job job) {
+        return download(request, job);
     }
 
     protected void onSuccess(Request request) {

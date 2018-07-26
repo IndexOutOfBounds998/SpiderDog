@@ -1,8 +1,8 @@
 package pre.cyy.download;
 
-import pre.cyy.request.Page;
+import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.Task;
+import pre.cyy.request.Job;
 
 /**
  * @author yang
@@ -12,12 +12,12 @@ import pre.cyy.request.Task;
 public interface Downloader {
 
     /**
-     * Downloads web pages and store in Page object.
+     * Downloads web pages and store in PageResponse object.
      *
      * @param request request
-     * @param task    task
+     * @param job    job
      * @return page
      */
-    Page download(Request request, Task task);
+    PageResponse download(Request request, Job job);
 
 }

@@ -9,9 +9,9 @@ import java.util.Map;
 /**
  * @author yang
  * @date 2018/7/26 15:14
- * @description Page 请求后的构造
+ * @description PageResponse 请求后的构造
  */
-public class Page {
+public class PageResponse {
 
     private Request request;
 
@@ -28,17 +28,17 @@ public class Page {
 
     private List<Request> targetRequests = new ArrayList<Request>();
 
-    public Page() {
+    public PageResponse() {
     }
 
     public void setRequest(Request request) {
         this.request = request;
     }
 
-    public static Page fail() {
-        Page page = new Page();
-        page.setDownloadSuccess(false);
-        return page;
+    public static PageResponse fail() {
+        PageResponse pageResponse = new PageResponse();
+        pageResponse.setDownloadSuccess(false);
+        return pageResponse;
     }
 
 
@@ -62,7 +62,7 @@ public class Page {
         return rawText;
     }
 
-    public Page setRawText(String rawText) {
+    public PageResponse setRawText(String rawText) {
         this.rawText = rawText;
         return this;
     }

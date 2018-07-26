@@ -1,8 +1,8 @@
 package pre.cyy.proxy;
 
 
-import pre.cyy.request.Page;
-import pre.cyy.request.Task;
+import pre.cyy.request.PageResponse;
+import pre.cyy.request.Job;
 
 /**
  * Proxy provider. <br>
@@ -15,17 +15,17 @@ public interface ProxyProvider {
      * Return proxy to Provider when complete a download.
      *
      * @param proxy the proxy config contains host,port and identify info
-     * @param page  the download result
-     * @param task  the download task
+     * @param pageResponse  the download result
+     * @param job  the download job
      */
-    void returnProxy(Proxy proxy, Page page, Task task);
+    void returnProxy(Proxy proxy, PageResponse pageResponse, Job job);
 
     /**
-     * Get a proxy for task by some strategy.
+     * Get a proxy for job by some strategy.
      *
-     * @param task the download task
+     * @param job the download job
      * @return proxy
      */
-    Proxy getProxy(Task task);
+    Proxy getProxy(Job job);
 
 }

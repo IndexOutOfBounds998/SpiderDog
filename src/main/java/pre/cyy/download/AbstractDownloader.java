@@ -20,7 +20,7 @@ public abstract class AbstractDownloader implements Downloader {
      * @return html
      */
     public String download(String url) {
-        return download(url, null).getRawText();
+        return download(url, "utf-8").getRawText();
     }
 
 

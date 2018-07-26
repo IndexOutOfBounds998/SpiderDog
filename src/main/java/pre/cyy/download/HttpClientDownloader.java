@@ -5,7 +5,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
 import pre.cyy.proxy.Proxy;
 import pre.cyy.proxy.ProxyProvider;
 import pre.cyy.request.Page;
@@ -16,7 +15,6 @@ import pre.cyy.utils.CharsetUtils;
 import pre.cyy.utils.HttpClientUtils;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,8 +25,6 @@ import java.util.Map;
  * @description HttpClientDownloader
  */
 public class HttpClientDownloader extends AbstractDownloader {
-
-    private Logger logger = Logger.getLogger(getClass());
 
     private final Map<String, CloseableHttpClient> httpClients = new HashMap<String, CloseableHttpClient>();
 

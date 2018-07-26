@@ -14,7 +14,6 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.HttpContext;
-import org.apache.log4j.Logger;
 import pre.cyy.request.Site;
 
 import javax.net.ssl.SSLContext;
@@ -34,8 +33,6 @@ import java.util.Map;
  */
 public class HttpClientGenerator {
 
-    private transient Logger logger = Logger.getLogger(getClass());
-
     private PoolingHttpClientConnectionManager connectionManager;
 
     public HttpClientGenerator() {
@@ -52,9 +49,9 @@ public class HttpClientGenerator {
             // 优先绕过安全证书
             return new SSLConnectionSocketFactory(createIgnoreVerifySSL());
         } catch (KeyManagementException e) {
-            logger.error("ssl connection fail", e);
+            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
-            logger.error("ssl connection fail", e);
+            e.printStackTrace();
         }
         return SSLConnectionSocketFactory.getSocketFactory();
     }

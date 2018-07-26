@@ -9,7 +9,6 @@ import org.apache.http.client.methods.HttpRequestWrapper;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.protocol.HttpContext;
-import org.apache.log4j.Logger;
 
 import java.net.URI;
 
@@ -19,8 +18,6 @@ import java.net.URI;
  * @description 支持post 302跳转策略实现类
  */
 public class CustomRedirectStrategy extends LaxRedirectStrategy {
-    private Logger logger = Logger.getLogger(getClass());
-
     @Override
     public HttpUriRequest getRedirect(HttpRequest request, HttpResponse response, HttpContext context) throws ProtocolException {
         URI uri = getLocationURI(request, response, context);
@@ -32,7 +29,7 @@ public class CustomRedirectStrategy extends LaxRedirectStrategy {
                 httpRequestWrapper.removeHeaders("Content-Length");
                 return httpRequestWrapper;
             } catch (Exception e) {
-                logger.error("强转为HttpRequestWrapper出错");
+                new IllegalAccessError("强转为HttpRequestWrapper出错");
             }
             return new HttpPost(uri);
         } else {

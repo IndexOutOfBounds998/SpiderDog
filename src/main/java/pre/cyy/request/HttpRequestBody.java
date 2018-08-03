@@ -1,5 +1,7 @@
 package pre.cyy.request;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -53,6 +55,18 @@ public class HttpRequestBody {
 
     public static HttpRequestBody json(String json, String encoding) throws UnsupportedEncodingException {
         return new HttpRequestBody(json.getBytes(encoding), ContentType.JSON, encoding);
+    }
+
+    public static HttpRequestBody json(String json) throws UnsupportedEncodingException {
+        return json(json, "utf-8");
+    }
+
+    public static HttpRequestBody json(Object obj) throws UnsupportedEncodingException {
+        return json(JSON.toJSONString(obj), "utf-8");
+    }
+
+    public static HttpRequestBody json(JSONObject obj) throws UnsupportedEncodingException {
+        return json((obj.toJSONString()), "utf-8");
     }
 
     public static HttpRequestBody xml(String xml, String encoding) throws UnsupportedEncodingException {

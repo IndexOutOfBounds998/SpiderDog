@@ -14,9 +14,9 @@ public interface ProxyProvider {
     /**
      * Return proxy to Provider when complete a download.
      *
-     * @param proxy the proxy config contains host,port and identify info
-     * @param pageResponse  the download result
-     * @param job  the download job
+     * @param proxy        the proxy config contains host,port and identify info
+     * @param pageResponse the download result
+     * @param job          the download job
      */
     void returnProxy(Proxy proxy, PageResponse pageResponse, Job job);
 

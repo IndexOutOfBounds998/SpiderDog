@@ -10,12 +10,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A simple ProxyProvider. Provide proxy as round-robin without heartbeat and error check. It can be used when all proxies are stable.
- *
- * @author code4crafter@gmail.com
- *         Date: 17/4/16
- *         Time: 10:18
- * @since 0.7.0
+ * @author yang
+ * @date 2018/8/3 14:07
+ * @description SimpleProxyProvider
  */
 public class SimpleProxyProvider implements ProxyProvider {
 

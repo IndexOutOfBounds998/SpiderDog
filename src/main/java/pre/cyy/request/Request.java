@@ -29,7 +29,7 @@ public class Request implements Serializable {
     private Map<String, Object> extras;
 
     /**
-     * cookies for current url, if not set use SiteBuilder's cookies
+     * cookies for current url, if not set use SiteConfigBuilder's cookies
      */
     private Map<String, String> cookies = new HashMap<String, String>();
 

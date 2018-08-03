@@ -20,6 +20,6 @@ public interface Job {
      *
      * @return site
      */
-    SiteBuilder getSite();
+    SiteConfigBuilder getSite();
 
 }

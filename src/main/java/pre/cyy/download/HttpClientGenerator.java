@@ -14,7 +14,7 @@ import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.HttpContext;
-import pre.cyy.request.SiteBuilder;
+import pre.cyy.request.SiteConfigBuilder;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -84,20 +84,20 @@ public class HttpClientGenerator {
         return this;
     }
 
-    public CloseableHttpClient getClient(SiteBuilder siteBuilder) {
-        return generateClient(siteBuilder);
+    public CloseableHttpClient getClient(SiteConfigBuilder siteConfigBuilder) {
+        return generateClient(siteConfigBuilder);
     }
 
-    private CloseableHttpClient generateClient(SiteBuilder siteBuilder) {
+    private CloseableHttpClient generateClient(SiteConfigBuilder siteConfigBuilder) {
         HttpClientBuilder httpClientBuilder = HttpClients.custom();
 
         httpClientBuilder.setConnectionManager(connectionManager);
-        if (siteBuilder.getUserAgent() != null) {
-            httpClientBuilder.setUserAgent(siteBuilder.getUserAgent());
+        if (siteConfigBuilder.getUserAgent() != null) {
+            httpClientBuilder.setUserAgent(siteConfigBuilder.getUserAgent());
         } else {
             httpClientBuilder.setUserAgent("");
         }
-        if (siteBuilder.isUseGzip()) {
+        if (siteConfigBuilder.isUseGzip()) {
             httpClientBuilder.addInterceptorFirst(new HttpRequestInterceptor() {
                 @Override
                 public void process(
@@ -113,27 +113,27 @@ public class HttpClientGenerator {
         httpClientBuilder.setRedirectStrategy(new CustomRedirectStrategy());
         SocketConfig.Builder socketConfigBuilder = SocketConfig.custom();
         socketConfigBuilder.setSoKeepAlive(true).setTcpNoDelay(true);
-        socketConfigBuilder.setSoTimeout(siteBuilder.getTimeOut());
+        socketConfigBuilder.setSoTimeout(siteConfigBuilder.getTimeOut());
         SocketConfig socketConfig = socketConfigBuilder.build();
         httpClientBuilder.setDefaultSocketConfig(socketConfig);
         connectionManager.setDefaultSocketConfig(socketConfig);
-        httpClientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(siteBuilder.getRetryTimes(), true));
-        generateCookie(httpClientBuilder, siteBuilder);
+        httpClientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(siteConfigBuilder.getRetryTimes(), true));
+        generateCookie(httpClientBuilder, siteConfigBuilder);
         return httpClientBuilder.build();
     }
 
-    private void generateCookie(HttpClientBuilder httpClientBuilder, SiteBuilder siteBuilder) {
-        if (siteBuilder.isDisableCookieManagement()) {
+    private void generateCookie(HttpClientBuilder httpClientBuilder, SiteConfigBuilder siteConfigBuilder) {
+        if (siteConfigBuilder.isDisableCookieManagement()) {
             httpClientBuilder.disableCookieManagement();
             return;
         }
         CookieStore cookieStore = new BasicCookieStore();
-        for (Map.Entry<String, String> cookieEntry : siteBuilder.getCookies().entrySet()) {
+        for (Map.Entry<String, String> cookieEntry : siteConfigBuilder.getCookies().entrySet()) {
             BasicClientCookie cookie = new BasicClientCookie(cookieEntry.getKey(), cookieEntry.getValue());
-            cookie.setDomain(siteBuilder.getDomain());
+            cookie.setDomain(siteConfigBuilder.getDomain());
             cookieStore.addCookie(cookie);
         }
-        for (Map.Entry<String, Map<String, String>> domainEntry : siteBuilder.getAllCookies().entrySet()) {
+        for (Map.Entry<String, Map<String, String>> domainEntry : siteConfigBuilder.getAllCookies().entrySet()) {
             for (Map.Entry<String, String> cookieEntry : domainEntry.getValue().entrySet()) {
                 BasicClientCookie cookie = new BasicClientCookie(cookieEntry.getKey(), cookieEntry.getValue());
                 cookie.setDomain(domainEntry.getKey());

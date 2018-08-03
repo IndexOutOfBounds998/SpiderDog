@@ -3,7 +3,7 @@ package pre.cyy.download;
 
 import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.SiteBuilder;
+import pre.cyy.request.SiteConfigBuilder;
 import pre.cyy.request.Job;
 
 /**
@@ -32,7 +32,7 @@ public abstract class AbstractDownloader implements Downloader {
      * @return html
      */
     public PageResponse download(String url, String charset) {
-        PageResponse pageResponse = download(new Request(url), SiteBuilder.builder().setCharset(charset).toTask());
+        PageResponse pageResponse = download(new Request(url), SiteConfigBuilder.builder().setCharset(charset).toJob());
         return pageResponse;
     }
 

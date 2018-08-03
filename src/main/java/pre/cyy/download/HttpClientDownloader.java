@@ -10,7 +10,7 @@ import pre.cyy.proxy.ProxyProvider;
 import pre.cyy.request.Job;
 import pre.cyy.request.PageResponse;
 import pre.cyy.request.Request;
-import pre.cyy.request.SiteBuilder;
+import pre.cyy.request.SiteConfigBuilder;
 import pre.cyy.utils.CharsetUtils;
 import pre.cyy.utils.HttpClientUtils;
 
@@ -49,17 +49,17 @@ public class HttpClientDownloader extends AbstractDownloader {
         this.proxyProvider = proxyProvider;
     }
 
-    private CloseableHttpClient getHttpClient(SiteBuilder siteBuilder) {
-        if (siteBuilder == null) {
+    private CloseableHttpClient getHttpClient(SiteConfigBuilder siteConfigBuilder) {
+        if (siteConfigBuilder == null) {
             return httpClientGenerator.getClient(null);
         }
-        String domain = siteBuilder.getDomain();
+        String domain = siteConfigBuilder.getDomain();
         CloseableHttpClient httpClient = httpClients.get(domain);
         if (httpClient == null) {
             synchronized (this) {
                 httpClient = httpClients.get(domain);
                 if (httpClient == null) {
-                    httpClient = httpClientGenerator.getClient(siteBuilder);
+                    httpClient = httpClientGenerator.getClient(siteConfigBuilder);
                     httpClients.put(domain, httpClient);
                 }
             }

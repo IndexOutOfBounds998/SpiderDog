@@ -7,9 +7,9 @@ import java.util.*;
 /**
  * @author yang
  * @date 2018/7/24 18:22
- * @description SiteBuilder 站点信息
+ * @description SiteConfigBuilder 站点信息
  */
-public class SiteBuilder {
+public class SiteConfigBuilder {
 
     private String domain;
 
@@ -45,12 +45,12 @@ public class SiteBuilder {
     }
 
     /**
-     * new a SiteBuilder
+     * new a SiteConfigBuilder
      *
      * @return new site
      */
-    public static SiteBuilder builder() {
-        return new SiteBuilder();
+    public static SiteConfigBuilder builder() {
+        return new SiteConfigBuilder();
     }
 
     /**
@@ -60,7 +60,7 @@ public class SiteBuilder {
      * @param value value
      * @return this
      */
-    public SiteBuilder addCookie(String name, String value) {
+    public SiteConfigBuilder addCookie(String name, String value) {
         defaultCookies.put(name, value);
         return this;
     }
@@ -73,7 +73,7 @@ public class SiteBuilder {
      * @param value  value
      * @return this
      */
-    public SiteBuilder addCookie(String domain, String name, String value) {
+    public SiteConfigBuilder addCookie(String domain, String name, String value) {
         if (!cookies.containsKey(domain)) {
             cookies.put(domain, new HashMap<String, String>());
         }
@@ -87,7 +87,7 @@ public class SiteBuilder {
      * @param userAgent userAgent
      * @return this
      */
-    public SiteBuilder setUserAgent(String userAgent) {
+    public SiteConfigBuilder setUserAgent(String userAgent) {
         this.userAgent = userAgent;
         return this;
     }
@@ -134,7 +134,7 @@ public class SiteBuilder {
      * @param domain domain
      * @return this
      */
-    public SiteBuilder setDomain(String domain) {
+    public SiteConfigBuilder setDomain(String domain) {
         this.domain = domain;
         return this;
     }
@@ -146,7 +146,7 @@ public class SiteBuilder {
      * @param charset charset
      * @return this
      */
-    public SiteBuilder setCharset(String charset) {
+    public SiteConfigBuilder setCharset(String charset) {
         this.charset = charset;
         return this;
     }
@@ -170,7 +170,7 @@ public class SiteBuilder {
      * @param timeOut timeOut
      * @return this
      */
-    public SiteBuilder setTimeOut(int timeOut) {
+    public SiteConfigBuilder setTimeOut(int timeOut) {
         this.timeOut = timeOut;
         return this;
     }
@@ -184,7 +184,7 @@ public class SiteBuilder {
      * @param acceptStatCode acceptStatCode
      * @return this
      */
-    public SiteBuilder setAcceptStatCode(Set<Integer> acceptStatCode) {
+    public SiteConfigBuilder setAcceptStatCode(Set<Integer> acceptStatCode) {
         this.acceptStatCode = acceptStatCode;
         return this;
     }
@@ -220,7 +220,7 @@ public class SiteBuilder {
      * @param value value of header
      * @return this
      */
-    public SiteBuilder addHeader(String key, String value) {
+    public SiteConfigBuilder addHeader(String key, String value) {
         headers.put(key, value);
         return this;
     }
@@ -231,7 +231,7 @@ public class SiteBuilder {
      * @param retryTimes retryTimes
      * @return this
      */
-    public SiteBuilder setRetryTimes(int retryTimes) {
+    public SiteConfigBuilder setRetryTimes(int retryTimes) {
         this.retryTimes = retryTimes;
         return this;
     }
@@ -251,7 +251,7 @@ public class SiteBuilder {
      * @param cycleRetryTimes cycleRetryTimes
      * @return this
      */
-    public SiteBuilder setCycleRetryTimes(int cycleRetryTimes) {
+    public SiteConfigBuilder setCycleRetryTimes(int cycleRetryTimes) {
         this.cycleRetryTimes = cycleRetryTimes;
         return this;
     }
@@ -270,7 +270,7 @@ public class SiteBuilder {
      * @param retrySleepTime retrySleepTime
      * @return this
      */
-    public SiteBuilder setRetrySleepTime(int retrySleepTime) {
+    public SiteConfigBuilder setRetrySleepTime(int retrySleepTime) {
         this.retrySleepTime = retrySleepTime;
         return this;
     }
@@ -282,7 +282,7 @@ public class SiteBuilder {
      * @param useGzip useGzip
      * @return this
      */
-    public SiteBuilder setUseGzip(boolean useGzip) {
+    public SiteConfigBuilder setUseGzip(boolean useGzip) {
         this.useGzip = useGzip;
         return this;
     }
@@ -299,16 +299,16 @@ public class SiteBuilder {
      * @param disableCookieManagement disableCookieManagement
      * @return this
      */
-    public SiteBuilder setDisableCookieManagement(boolean disableCookieManagement) {
+    public SiteConfigBuilder setDisableCookieManagement(boolean disableCookieManagement) {
         this.disableCookieManagement = disableCookieManagement;
         return this;
     }
 
-    public Job toTask() {
+    public Job toJob() {
         return new Job() {
             @Override
             public String getUUID() {
-                String uuid = SiteBuilder.this.getDomain();
+                String uuid = SiteConfigBuilder.this.getDomain();
                 if (uuid == null) {
                     uuid = UUID.randomUUID().toString();
                 }
@@ -316,8 +316,8 @@ public class SiteBuilder {
             }
 
             @Override
-            public SiteBuilder getSite() {
-                return SiteBuilder.this;
+            public SiteConfigBuilder getSite() {
+                return SiteConfigBuilder.this;
             }
         };
     }
@@ -327,19 +327,19 @@ public class SiteBuilder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SiteBuilder siteBuilder = (SiteBuilder) o;
+        SiteConfigBuilder siteConfigBuilder = (SiteConfigBuilder) o;
 
-        if (cycleRetryTimes != siteBuilder.cycleRetryTimes) return false;
-        if (retryTimes != siteBuilder.retryTimes) return false;
-        if (timeOut != siteBuilder.timeOut) return false;
-        if (acceptStatCode != null ? !acceptStatCode.equals(siteBuilder.acceptStatCode) : siteBuilder.acceptStatCode != null)
+        if (cycleRetryTimes != siteConfigBuilder.cycleRetryTimes) return false;
+        if (retryTimes != siteConfigBuilder.retryTimes) return false;
+        if (timeOut != siteConfigBuilder.timeOut) return false;
+        if (acceptStatCode != null ? !acceptStatCode.equals(siteConfigBuilder.acceptStatCode) : siteConfigBuilder.acceptStatCode != null)
             return false;
-        if (charset != null ? !charset.equals(siteBuilder.charset) : siteBuilder.charset != null) return false;
-        if (defaultCookies != null ? !defaultCookies.equals(siteBuilder.defaultCookies) : siteBuilder.defaultCookies != null)
+        if (charset != null ? !charset.equals(siteConfigBuilder.charset) : siteConfigBuilder.charset != null) return false;
+        if (defaultCookies != null ? !defaultCookies.equals(siteConfigBuilder.defaultCookies) : siteConfigBuilder.defaultCookies != null)
             return false;
-        if (domain != null ? !domain.equals(siteBuilder.domain) : siteBuilder.domain != null) return false;
-        if (headers != null ? !headers.equals(siteBuilder.headers) : siteBuilder.headers != null) return false;
-        return userAgent != null ? userAgent.equals(siteBuilder.userAgent) : siteBuilder.userAgent == null;
+        if (domain != null ? !domain.equals(siteConfigBuilder.domain) : siteConfigBuilder.domain != null) return false;
+        if (headers != null ? !headers.equals(siteConfigBuilder.headers) : siteConfigBuilder.headers != null) return false;
+        return userAgent != null ? userAgent.equals(siteConfigBuilder.userAgent) : siteConfigBuilder.userAgent == null;
     }
 
     @Override
@@ -359,7 +359,7 @@ public class SiteBuilder {
 
     @Override
     public String toString() {
-        return "SiteBuilder{" +
+        return "SiteConfigBuilder{" +
                 "domain='" + domain + '\'' +
                 ", userAgent='" + userAgent + '\'' +
                 ", cookies=" + defaultCookies +

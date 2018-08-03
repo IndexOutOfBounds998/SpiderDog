@@ -15,7 +15,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import pre.cyy.proxy.Proxy;
 import pre.cyy.request.Request;
-import pre.cyy.request.SiteBuilder;
+import pre.cyy.request.SiteConfigBuilder;
 import pre.cyy.utils.HttpConstant;
 import pre.cyy.utils.UrlUtils;
 
@@ -28,14 +28,14 @@ import java.util.Map;
  */
 public class HttpUriRequestConverter {
 
-    public HttpClientRequestContext convert(Request request, SiteBuilder siteBuilder, Proxy proxy) {
+    public HttpClientRequestContext convert(Request request, SiteConfigBuilder siteConfigBuilder, Proxy proxy) {
         HttpClientRequestContext httpClientRequestContext = new HttpClientRequestContext();
-        httpClientRequestContext.setHttpUriRequest(convertHttpUriRequest(request, siteBuilder, proxy));
-        httpClientRequestContext.setHttpClientContext(convertHttpClientContext(request, siteBuilder, proxy));
+        httpClientRequestContext.setHttpUriRequest(convertHttpUriRequest(request, siteConfigBuilder, proxy));
+        httpClientRequestContext.setHttpClientContext(convertHttpClientContext(request, siteConfigBuilder, proxy));
         return httpClientRequestContext;
     }
 
-    private HttpClientContext convertHttpClientContext(Request request, SiteBuilder siteBuilder, Proxy proxy) {
+    private HttpClientContext convertHttpClientContext(Request request, SiteConfigBuilder siteConfigBuilder, Proxy proxy) {
         HttpClientContext httpContext = new HttpClientContext();
         if (proxy != null && proxy.getUsername() != null) {
             AuthState authState = new AuthState();
@@ -54,19 +54,19 @@ public class HttpUriRequestConverter {
         return httpContext;
     }
 
-    private HttpUriRequest convertHttpUriRequest(Request request, SiteBuilder siteBuilder, Proxy proxy) {
+    private HttpUriRequest convertHttpUriRequest(Request request, SiteConfigBuilder siteConfigBuilder, Proxy proxy) {
         RequestBuilder requestBuilder = selectRequestMethod(request).setUri(request.getUrl());
-        if (siteBuilder.getHeaders() != null) {
-            for (Map.Entry<String, String> headerEntry : siteBuilder.getHeaders().entrySet()) {
+        if (siteConfigBuilder.getHeaders() != null) {
+            for (Map.Entry<String, String> headerEntry : siteConfigBuilder.getHeaders().entrySet()) {
                 requestBuilder.addHeader(headerEntry.getKey(), headerEntry.getValue());
             }
         }
 
         RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-        if (siteBuilder != null) {
-            requestConfigBuilder.setConnectionRequestTimeout(siteBuilder.getTimeOut())
-                    .setSocketTimeout(siteBuilder.getTimeOut())
-                    .setConnectTimeout(siteBuilder.getTimeOut())
+        if (siteConfigBuilder != null) {
+            requestConfigBuilder.setConnectionRequestTimeout(siteConfigBuilder.getTimeOut())
+                    .setSocketTimeout(siteConfigBuilder.getTimeOut())
+                    .setConnectTimeout(siteConfigBuilder.getTimeOut())
                     .setCookieSpec(CookieSpecs.STANDARD);
         }
 

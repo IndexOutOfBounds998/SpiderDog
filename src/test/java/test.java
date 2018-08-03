@@ -18,6 +18,10 @@ public class test {
 
 
         HttpClientDownloader httpClientDownloader = new HttpClientDownloader();
+        //一个简单的请求
+        String str = httpClientDownloader.download("https://blog.csdn.net/xwnxwn/article/details/52510484");
+        System.out.println(str);
+
         //设置代理
         httpClientDownloader.setProxyProvider(new SimpleProxyProvider(null));
 

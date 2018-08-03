@@ -23,7 +23,6 @@ public abstract class AbstractDownloader implements Downloader {
         return download(url, "utf-8").getRawText();
     }
 
-
     /**
      * A simple method to download a url.
      *

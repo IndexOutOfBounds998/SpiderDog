@@ -1,7 +1,9 @@
-**spiderDog**
-**代码实例**
-```java
+import org.spiderdog.annotation.Field;
+import org.spiderdog.annotation.Source;
 
+/**
+ * Created by yang on 2019/8/13.
+ */
 @Source(url = "https://cj.sina.com.cn/article/detail/2475967382/318723?column=licai&ch=9")
 public class Model {
     @Field(selector = "body > div.main-content.w1240 > h1")
@@ -22,19 +24,3 @@ public class Model {
         this.title = title;
     }
 }
-
-
-
- public static void main(String[] args) {
-
-        DefaultSpider.createSpiderDog(null, new SpiderCall<Model>() {
-            @Override
-            public void onSuccess(Model model) {
-                System.out.println(model.getTitle());
-            }
-        }, new Model())
-                .run();
-    }
-
-     
-```

@@ -3,10 +3,14 @@ package org.spiderdog.Spider;
 import com.google.common.base.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.spiderdog.api.GenericTypeCommand;
 import org.spiderdog.api.SpiderCall;
 import org.spiderdog.command.CommandContext;
 import org.spiderdog.download.HttpClientDownloader;
+import org.spiderdog.model.PageSource;
+import org.spiderdog.model.Pager;
 import org.spiderdog.model.Rule;
 import org.spiderdog.proxy.ProxyProvider;
 import org.spiderdog.request.Job;
@@ -29,6 +33,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class DefaultSpider<T> implements Runnable, Job {
 
     private SpiderCall spiderCall;
+
+    private Pager pager;
+
+    private PageSource pageSource;
 
     private String url;
 
@@ -88,6 +96,8 @@ public class DefaultSpider<T> implements Runnable, Job {
      */
     void resolveAnnotation() {
         this.url = SearchUtil.getUrl(this.souceClass);
+        this.pager = SearchUtil.getNextPager(this.souceClass);
+        this.pageSource = SearchUtil.getPageSource(this.souceClass);
         this.fieldAnno = SearchUtil.getFieldAnno(this.souceClass);
         this.urls.add(this.url);
     }
@@ -131,25 +141,50 @@ public class DefaultSpider<T> implements Runnable, Job {
         Request request = new Request(url);
         PageResponse download = clientDownloader.download(request, this);
         Document document = Jsoup.parse(download.getRawText());
+
+        //获取下一页加载到urls里
+        if (this.pager != null) {
+            Elements select = document.select(pager.getSeletor());
+            if (select != null) {
+                String nextUrl = select.attr(pager.getAttr());
+                if (!Strings.isNullOrEmpty(nextUrl)) {
+                    System.out.println("add next url " + nextUrl);
+                    this.urls.offer(nextUrl);
+                }
+            }
+
+        }
+
         HashMap<String, Object> map = new HashMap<>();
         Set<Map.Entry<String, Rule>> entries = fieldAnno.entrySet();
         for (Map.Entry<String, Rule> entry : entries) {
             GenericTypeCommand genericTypeCommand = commandContext.genericTypeCommand(entry.getValue().getType());
             Object parseText = genericTypeCommand.command(entry.getValue(), document);
             map.put(entry.getKey(), parseText);
-            if (parseText != null) {
-                if (entry.getValue().isNextUrl()) {
-                    if (parseText instanceof Object[]) {
-                        String[] parseText1 = (String[]) parseText;
-                        for (String s : parseText1) {
-                            this.urls.offer(s);
-                        }
-                    } else
-                        this.urls.offer(parseText.toString());
-                }
-            }
-
         }
+
+
+        //检查当前页面是否需要获取更多的链接
+
+        if (pageSource != null) {
+            if (!Strings.isNullOrEmpty(pageSource.getSeletor())) {
+
+                Elements select = document.select(pageSource.getSeletor());
+
+                for (Element element : select) {
+
+                    String url = element.attr(pageSource.getAttr());
+
+                    if (!Strings.isNullOrEmpty(url)) {
+                        this.urls.offer(url);
+                    }
+
+                }
+
+
+            }
+        }
+
         this.souceClass = BeanUtils.mapToEntity(map, (Class<T>) this.souceClass.getClass());
         this.spiderCall.onSuccess(this.souceClass);
     }

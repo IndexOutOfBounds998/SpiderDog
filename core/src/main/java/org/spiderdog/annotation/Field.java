@@ -9,10 +9,4 @@ public @interface Field {
 
     String attr() default "";
 
-    /**
-     * 是否作为下一次执行的地址
-     *
-     * @return
-     */
-    boolean isNextUrl() default false;
 }

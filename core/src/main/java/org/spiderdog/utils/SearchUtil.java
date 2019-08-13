@@ -5,7 +5,10 @@ package org.spiderdog.utils;
  */
 
 import org.spiderdog.annotation.Field;
+import org.spiderdog.annotation.PageScan;
+import org.spiderdog.annotation.Pager;
 import org.spiderdog.annotation.Source;
+import org.spiderdog.model.PageSource;
 import org.spiderdog.model.Rule;
 
 import java.lang.annotation.Annotation;
@@ -24,14 +27,34 @@ public class SearchUtil {
         return getUrl(model.getClass());
     }
 
+    public static <T> org.spiderdog.model.Pager getNextPager(T model) {
+        return getNextPager(model.getClass());
+    }
+
     public static String getUrl(Class clazz) {
         return ((Source) clazz.getAnnotation(Source.class)).url();
+    }
+
+
+    public static org.spiderdog.model.Pager getNextPager(Class clazz) {
+        Pager annotation = (Pager) clazz.getAnnotation(Pager.class);
+        return new org.spiderdog.model.Pager(annotation.nextUrlSeletor(), annotation.attr());
+
     }
 
     public static <T> HashMap<String, Rule> getFieldAnno(T model) {
         return getFieldAnno(model.getClass());
     }
 
+    public static <T> PageSource getPageSource(T souceClass) {
+        return getPageSource(souceClass.getClass());
+    }
+
+    public static PageSource getPageSource(Class clazz) {
+        PageScan annotation = (PageScan) clazz.getAnnotation(PageScan.class);
+        return new PageSource(annotation.seletor(), annotation.attr());
+
+    }
 
     public static HashMap<String, Rule> getFieldAnno(Class clazz) {
         HashMap<String, Rule> fieldsMap = new HashMap<>();
@@ -47,7 +70,6 @@ public class SearchUtil {
                     rule.setSeletor(field1.selector());
                     rule.setType(genericType);
                     rule.setAttr(field1.attr());
-                    rule.setNextUrl(field1.isNextUrl());
                     fieldsMap.put(name, rule);
                 }
             }

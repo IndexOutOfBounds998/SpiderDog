@@ -3,23 +3,16 @@ package org.spiderdog.model;
 import java.lang.reflect.Type;
 
 /**
+ * Rule
  * Created by yang on 2019/8/13.
  */
 public class Rule {
 
-    String xpath;
-    String seletor;
-    String attr;
-    Type type;
-    boolean isNextUrl;
+    private String xpath;
+    private String seletor;
+    private String attr;
+    private Type type;
 
-    public boolean isNextUrl() {
-        return isNextUrl;
-    }
-
-    public void setNextUrl(boolean nextUrl) {
-        isNextUrl = nextUrl;
-    }
 
     public String getAttr() {
         return attr;

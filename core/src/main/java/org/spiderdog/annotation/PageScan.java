@@ -6,14 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Source
+ * PageScan 扫描页面的列表url 作为终极页的上一层url处理
  * Created by yang on 2019/8/13.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Source {
+public @interface PageScan {
 
+    String seletor() default "";
 
-    String url();
-
+    String attr() default "";
 }

@@ -6,18 +6,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Pager
  * Created by yang on 2019/8/13.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Pager {
 
+    String nextUrlSeletor() default "";
 
-    /**
-     * 下一页的选择器
-     *
-     * @return
-     */
-    String nextPageSeletor();
-
+    String attr() default "";
 }

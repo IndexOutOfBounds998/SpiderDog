@@ -176,6 +176,7 @@ public class DefaultSpider<T> implements Runnable, Job {
                     String url = element.attr(pageSource.getAttr());
 
                     if (!Strings.isNullOrEmpty(url)) {
+                        System.out.println("add url " + url);
                         this.urls.offer(url);
                     }
 

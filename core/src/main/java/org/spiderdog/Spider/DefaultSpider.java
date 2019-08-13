@@ -3,23 +3,30 @@ package org.spiderdog.Spider;
 import com.google.common.base.Strings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.spiderdog.api.GenericTypeCommand;
 import org.spiderdog.api.SpiderCall;
+import org.spiderdog.command.CommandContext;
 import org.spiderdog.download.HttpClientDownloader;
 import org.spiderdog.model.Rule;
+import org.spiderdog.proxy.ProxyProvider;
+import org.spiderdog.request.Job;
+import org.spiderdog.request.PageResponse;
+import org.spiderdog.request.Request;
 import org.spiderdog.request.SiteConfigBuilder;
 import org.spiderdog.utils.BeanUtils;
 import org.spiderdog.utils.SearchUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * DefaultSpider
  * Created by yang on 2019/8/13.
  */
-public class DefaultSpider<T> implements Runnable {
+public class DefaultSpider<T> implements Runnable, Job {
 
     private SpiderCall spiderCall;
 
@@ -29,7 +36,13 @@ public class DefaultSpider<T> implements Runnable {
 
     private T souceClass;
 
-    HashMap<String, Rule> fieldAnno = new HashMap<>();
+    private Queue<String> urls = new ArrayBlockingQueue<String>(10);
+
+    private HashMap<String, Rule> fieldAnno = new HashMap<>();
+
+    private ProxyProvider proxyProvider;
+
+    private CommandContext commandContext = CommandContext.getCommandContext();
 
     private DefaultSpider() {
     }
@@ -60,49 +73,94 @@ public class DefaultSpider<T> implements Runnable {
         return this;
     }
 
+    public DefaultSpider setConfig(SiteConfigBuilder configBuilder) {
+        this.configBuilder = configBuilder;
+        return this;
+    }
+
+    public DefaultSpider setProxy(ProxyProvider proxy) {
+        this.proxyProvider = proxy;
+        return this;
+    }
+
     /**
      * 解析
      */
     void resolveAnnotation() {
         this.url = SearchUtil.getUrl(this.souceClass);
         this.fieldAnno = SearchUtil.getFieldAnno(this.souceClass);
-
+        this.urls.add(this.url);
     }
 
 
     @Override
     public void run() {
         resolveAnnotation();
-        requestAndParse();
+
+        while (true) {
+
+            this.url = urls.poll();
+            if (Strings.isNullOrEmpty(this.url)) {
+                System.out.println("等待url。。。");
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+            requestAndParse();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
+    /**
+     * requestAndParse 请求并解析
+     */
     private void requestAndParse() {
         HttpClientDownloader clientDownloader = new HttpClientDownloader();
-        String download = clientDownloader.download(url);
-        Document document = Jsoup.parse(download);
+        if (proxyProvider != null) {
+            clientDownloader.setProxyProvider(proxyProvider);
+        }
+        Request request = new Request(url);
+        PageResponse download = clientDownloader.download(request, this);
+        Document document = Jsoup.parse(download.getRawText());
         HashMap<String, Object> map = new HashMap<>();
         Set<Map.Entry<String, Rule>> entries = fieldAnno.entrySet();
         for (Map.Entry<String, Rule> entry : entries) {
-            String key = entry.getKey();
-            Rule value = entry.getValue();
-            String xpath = value.getXpath();
-            String seletor = value.getSeletor();
-            if (!Strings.isNullOrEmpty(xpath)) {
-
-            }
-            if (!Strings.isNullOrEmpty(seletor)) {
-                String parseText = "";
-                Elements select = document.select(seletor);
-                if (Strings.isNullOrEmpty(value.getAttr())) {
-                    parseText = select.text();
-                } else {
-                    parseText = select.attr(value.getAttr());
+            GenericTypeCommand genericTypeCommand = commandContext.genericTypeCommand(entry.getValue().getType());
+            Object parseText = genericTypeCommand.command(entry.getValue(), document);
+            map.put(entry.getKey(), parseText);
+            if (parseText != null) {
+                if (entry.getValue().isNextUrl()) {
+                    if (parseText instanceof Object[]) {
+                        String[] parseText1 = (String[]) parseText;
+                        for (String s : parseText1) {
+                            this.urls.offer(s);
+                        }
+                    } else
+                        this.urls.offer(parseText.toString());
                 }
-                map.put(key, parseText);
             }
 
         }
         this.souceClass = BeanUtils.mapToEntity(map, (Class<T>) this.souceClass.getClass());
         this.spiderCall.onSuccess(this.souceClass);
+    }
+
+    @Override
+    public String getUUID() {
+        return null;
+    }
+
+    @Override
+    public SiteConfigBuilder getSite() {
+        return configBuilder;
     }
 }

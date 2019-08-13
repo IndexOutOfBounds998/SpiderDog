@@ -1,6 +1,7 @@
 package org.spiderdog.proxy;
 
 
+import com.google.common.collect.Lists;
 import org.spiderdog.request.Job;
 import org.spiderdog.request.PageResponse;
 
@@ -24,8 +25,20 @@ public class SimpleProxyProvider implements ProxyProvider {
         this(proxies, new AtomicInteger(-1));
     }
 
+    public SimpleProxyProvider(Proxy proxie) {
+        this(proxie, new AtomicInteger(-1));
+    }
+
+
     private SimpleProxyProvider(List<Proxy> proxies, AtomicInteger pointer) {
         this.proxies = proxies;
+        this.pointer = pointer;
+    }
+
+    private SimpleProxyProvider(Proxy proxies, AtomicInteger pointer) {
+        List<Proxy> list = new ArrayList<>();
+        list.add(proxies);
+        this.proxies = list;
         this.pointer = pointer;
     }
 

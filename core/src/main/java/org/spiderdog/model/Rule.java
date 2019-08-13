@@ -1,5 +1,7 @@
 package org.spiderdog.model;
 
+import java.lang.reflect.Type;
+
 /**
  * Created by yang on 2019/8/13.
  */
@@ -8,7 +10,16 @@ public class Rule {
     String xpath;
     String seletor;
     String attr;
-    Class aClass;
+    Type type;
+    boolean isNextUrl;
+
+    public boolean isNextUrl() {
+        return isNextUrl;
+    }
+
+    public void setNextUrl(boolean nextUrl) {
+        isNextUrl = nextUrl;
+    }
 
     public String getAttr() {
         return attr;
@@ -18,12 +29,12 @@ public class Rule {
         this.attr = attr;
     }
 
-    public Class getaClass() {
-        return aClass;
+    public Type getType() {
+        return type;
     }
 
-    public void setaClass(Class aClass) {
-        this.aClass = aClass;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public String getXpath() {

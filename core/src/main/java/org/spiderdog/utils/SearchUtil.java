@@ -4,13 +4,13 @@ package org.spiderdog.utils;
  * Created by yang on 2019/8/13.
  */
 
-import com.alibaba.fastjson.JSON;
 import org.spiderdog.annotation.Field;
 import org.spiderdog.annotation.Source;
 import org.spiderdog.model.Rule;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +33,11 @@ public class SearchUtil {
     }
 
 
-
     public static HashMap<String, Rule> getFieldAnno(Class clazz) {
         HashMap<String, Rule> fieldsMap = new HashMap<>();
         java.lang.reflect.Field[] fields = clazz.getDeclaredFields();
         for (java.lang.reflect.Field field : fields) {
+            Type genericType = field.getGenericType();
             if (field.isAnnotationPresent(Field.class)) {
                 String name = field.getName();
                 Annotation[] annotations = field.getAnnotations();
@@ -45,9 +45,9 @@ public class SearchUtil {
                     Field field1 = (Field) annotation;
                     Rule rule = new Rule();
                     rule.setSeletor(field1.selector());
-                    Class<? extends java.lang.reflect.Field> aClass = field.getClass();
-                    rule.setaClass(aClass);
+                    rule.setType(genericType);
                     rule.setAttr(field1.attr());
+                    rule.setNextUrl(field1.isNextUrl());
                     fieldsMap.put(name, rule);
                 }
             }

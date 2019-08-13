@@ -1,40 +1,42 @@
 **spiderDog**
 **代码实例**
 ```java
+import com.google.common.base.Strings;
+import org.spiderdog.Spider.DefaultSpider;
+import org.spiderdog.api.SpiderCall;
+import org.spiderdog.proxy.Proxy;
+import org.spiderdog.proxy.ProxyProvider;
+import org.spiderdog.proxy.SimpleProxyProvider;
+import org.spiderdog.request.SiteConfigBuilder;
 
-@Source(url = "https://cj.sina.com.cn/article/detail/2475967382/318723?column=licai&ch=9")
-public class Model {
-    @Field(selector = "body > div.main-content.w1240 > h1")
-    private String title;
-
-    @Override
-    public String toString() {
-        return "Model{" +
-                "title='" + title + '\'' +
-                '}';
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-}
+/**
+ * Main
+ * Created by yang on 2019/8/13.
+ */
+public class Main {
 
 
+    public static void main(String[] args) {
 
- public static void main(String[] args) {
+        SiteConfigBuilder siteConfigBuilder = new SiteConfigBuilder();
+
+        Proxy proxy = new Proxy("127.0.0.1", 1088);
+        ProxyProvider proxyProvider = new SimpleProxyProvider(proxy);
 
         DefaultSpider.createSpiderDog(null, new SpiderCall<Model>() {
             @Override
             public void onSuccess(Model model) {
-                System.out.println(model.getTitle());
+                if (!Strings.isNullOrEmpty(model.getImg())) {
+                    System.out.println(model.getTitle());
+                    System.out.println(model.getImg());
+                }
             }
         }, new Model())
+                .setConfig(siteConfigBuilder)
+                .setProxy(proxyProvider)
                 .run();
     }
+}
 
      
 ```

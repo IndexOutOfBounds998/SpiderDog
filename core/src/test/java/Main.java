@@ -6,8 +6,6 @@ import org.spiderdog.proxy.ProxyProvider;
 import org.spiderdog.proxy.SimpleProxyProvider;
 import org.spiderdog.request.SiteConfigBuilder;
 
-import java.util.Arrays;
-
 /**
  * Main
  * Created by yang on 2019/8/13.

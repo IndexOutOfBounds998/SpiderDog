@@ -7,7 +7,7 @@ import org.spiderdog.annotation.Source;
  * Model
  * Created by yang on 2019/8/13.
  */
-@Source(url = "https://e-hentai.org/g/1463325/daee1c7e7f/")
+@Source(url = "https://www.csdn.net/nav/java")
 @Pager(nextUrlSeletor = "body > div:nth-child(9) > table > tbody > tr > td:nth-child(11) > a", attr = "href")
 @PageScan(seletor = "#gdt > div > div > a", attr = "href")
 public class Model {
